@@ -5,8 +5,7 @@ namespace StudentSimulator.Domain
     public class Location
     {
         public string Name { get; }
-        private Dictionary<string, GameObject> gameObjects; // не лучше ли GameObject сделать TaskGiver
-        // Можно, но ведь эти объекты прежде всего игровые сущности, а уже потом TaskGivers
+        private Dictionary<string, GameObject> gameObjects;
         public IReadOnlyDictionary<string, GameObject> Entities => gameObjects;
 
         public Location(Dictionary<string, GameObject> gameObjs)
