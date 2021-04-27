@@ -12,5 +12,10 @@
         public int Authority { get; private set; }
         // всё что выше, нужно лучше проработать и понять как игрок будет знать про свои скиллы.
 
+        public void InteractWith(GameObject gameObject)
+        {
+
+        }
+
     }
 }
