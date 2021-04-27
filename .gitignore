@@ -13,3 +13,4 @@ bld/
 [Ll]og/
 [Ll]ogs/
 .vs/
+*.user
