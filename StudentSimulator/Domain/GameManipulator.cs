@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace StudentSimulator.Domain
 {
     public static class GameManipulator
     {
+        private static readonly string savedGamesFile = $"{Environment.CurrentDirectory}/games.json";
         public static Game currentGame { get; private set; }
         
         public static event Action OnCreateGame;
@@ -35,14 +38,22 @@ namespace StudentSimulator.Domain
             var games = GetListOfGames();
             if (!games.ContainsKey(currentGame.ID))
                 games[currentGame.ID] = currentGame;
-            //TODO: как-то записываем сохраненную игру в файл
+            using (var writer = new JsonTextWriter
+                (new StreamWriter(new FileStream(savedGamesFile, FileMode.OpenOrCreate))))
+            {
+                JsonSerializer.Create().Serialize(writer, games);
+            }
         }
 
         public static Dictionary<int, Game> GetListOfGames()
         {
-            var games = new Dictionary<int, Game>();
-            //TODO: как-то берем инфу о сохраненной игре из файлика
-            return games;
+            if (!File.Exists(savedGamesFile))
+                return new Dictionary<int, Game>();
+            using (var reader = new JsonTextReader(new StreamReader(savedGamesFile)))
+            {
+                var jsonString = reader.ReadAsString();
+                return JsonConvert.DeserializeObject<Dictionary<int, Game>>(jsonString);
+            }
         }
         
         public static void CreateGame()
