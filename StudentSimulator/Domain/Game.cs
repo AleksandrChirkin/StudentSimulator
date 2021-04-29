@@ -9,7 +9,7 @@ namespace StudentSimulator.Domain
         public GlobalMap Map { get; }
         
         public readonly int ID;
-        public event Action<string> OnChangeLocation;
+        public event Action<Location> OnChangeLocation;
 
         public Game(int days, Player player, GlobalMap map, int id)
         {
@@ -17,12 +17,22 @@ namespace StudentSimulator.Domain
             Player = player;
             Map = map;
             ID = id;
+            OnChangeLocation += Location_Changed;
         }
 
-        public void ChangeLocation(string name)
+        public void ChangeLocation(Location location)
         {
-            Map.ChangeLocation(name);
-            OnChangeLocation?.Invoke(name);
+            OnChangeLocation?.Invoke(location);
         }
+
+        private void Location_Changed(Location location)
+        {
+            Map.CurrentLocation = location;
+        }
+
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) &&
+                                                   obj is Game game && game.ID == ID;
+
+        public override int GetHashCode() => ID;
     }
 }

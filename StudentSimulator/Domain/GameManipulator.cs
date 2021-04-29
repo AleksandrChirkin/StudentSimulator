@@ -11,6 +11,7 @@ namespace StudentSimulator.Domain
         public static Game currentGame { get; private set; }
         
         public static event Action OnCreateGame;
+        public static event Action<HashSet<Game>> OnLoadSetOfGames;
         public static event Action<Game> OnLoadGame;
         public static event Action OnSaveGame;
 
@@ -23,7 +24,7 @@ namespace StudentSimulator.Domain
         private static void Game_Created()
         {
             var game = new Game(0, new Player(), 
-                new GlobalMap(new Dictionary<string, Location>()), 
+                new GlobalMap(new HashSet<Location>()), 
                 new Random().Next());
             currentGame = game;
         }
@@ -35,9 +36,9 @@ namespace StudentSimulator.Domain
 
         private static void Game_Saved()
         {
-            var games = GetListOfGames();
-            if (!games.ContainsKey(currentGame.ID))
-                games[currentGame.ID] = currentGame;
+            var games = GamesSet_Loaded();
+            if (!games.Contains(currentGame))
+                games.Add(currentGame);
             using (var writer = new JsonTextWriter
                 (new StreamWriter(new FileStream(savedGamesFile, FileMode.OpenOrCreate))))
             {
@@ -45,14 +46,14 @@ namespace StudentSimulator.Domain
             }
         }
 
-        public static Dictionary<int, Game> GetListOfGames()
+        private static HashSet<Game> GamesSet_Loaded()
         {
             if (!File.Exists(savedGamesFile))
-                return new Dictionary<int, Game>();
+                return new HashSet<Game>();
             using (var reader = new JsonTextReader(new StreamReader(savedGamesFile)))
             {
                 var jsonString = reader.ReadAsString();
-                return JsonConvert.DeserializeObject<Dictionary<int, Game>>(jsonString);
+                return JsonConvert.DeserializeObject<HashSet<Game>>(jsonString);
             }
         }
         
@@ -69,6 +70,13 @@ namespace StudentSimulator.Domain
         public static void SaveGame()
         {
             OnSaveGame?.Invoke();
+        }
+
+        public static HashSet<Game> GetSetOfGames()
+        {
+            var games = GamesSet_Loaded();
+            OnLoadSetOfGames?.Invoke(games);
+            return games;
         }
     }
 }
