@@ -11,7 +11,7 @@ namespace StudentSimulator.Domain
         public ISkillParameters PhilosophySkill { get; private set; }
         public int Authority { get; private set; }
 
-        private readonly List<Task> tasks = new List<Task>();
+        private readonly List<GameTask> tasks = new List<GameTask>();
         // всё что выше, нужно лучше проработать и понять как игрок будет знать про свои скиллы.
 
         public void InteractWith(GameObject gameObject)
@@ -19,7 +19,7 @@ namespace StudentSimulator.Domain
             tasks.Add(gameObject.GetNextTask());
         }
 
-        public void MakeTask(Task task)
+        public void MakeTask(GameTask task)
         {
             Stats = new StatParameters(
                 Stats.Expulsion + task.Prices.Expulsion,

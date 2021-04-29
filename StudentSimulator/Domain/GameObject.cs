@@ -5,21 +5,21 @@ namespace StudentSimulator.Domain
     public class GameObject
     {
         public string Name { get; }
-        private List<Task> tasks = new List<Task>();
+        private List<GameTask> tasks = new List<GameTask>();
 
-        public GameObject(string name, params Task[] tasks)
+        public GameObject(string name, params GameTask[] tasks)
         {
             Name = name;
             this.tasks.AddRange(tasks);
         }
 
-        private IEnumerable<Task> GetTasks()
+        private IEnumerable<GameTask> GetTasks()
         {
             foreach (var task in tasks)
                 yield return task;
         }
 
-        public Task GetNextTask()
+        public GameTask GetNextTask()
         {
             return GetTasks().GetEnumerator().Current;
         }

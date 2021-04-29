@@ -1,6 +1,6 @@
 ﻿namespace StudentSimulator.Domain
 {
-    public class Task
+    public class GameTask
     {
         public bool IsNecessary { get; }
         private TaskResult taskResult;
@@ -12,7 +12,7 @@
         // значит в таске должна быть инфа о стоимости его выполнения и награды.
         public StatParameters Prices;
 
-        public Task(StatParameters prices)
+        public GameTask(StatParameters prices)
         {
             Prices = prices;
         }
