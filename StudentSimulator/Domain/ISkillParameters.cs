@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace StudentSimulator.Domain
 {
-    class ISkillParameters
+    public interface ISkillParameters
     {
+        int Coefficient { get; set; }
+        int Level { get; set; }
     }
 }
