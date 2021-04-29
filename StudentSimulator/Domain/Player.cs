@@ -21,12 +21,9 @@ namespace StudentSimulator.Domain
 
         public void MakeTask(GameTask task)
         {
-            Stats = new StatParameters(
-                Stats.Expulsion + task.Prices.Expulsion,
-                Stats.Time + task.Prices.Time,
-                Stats.Energy + task.Prices.Energy,
-                Stats.Experience + task.Prices.Experience);
-            
+            Stats += task.Prices;
+            // тут может какая-то миниигра запускаться при выполнении.
+            // можно передавать сюда лямбду.
         }
     }
 }

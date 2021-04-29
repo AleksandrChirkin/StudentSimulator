@@ -3,7 +3,8 @@
     public class GameTask
     {
         public bool IsNecessary { get; }
-        private TaskResult taskResult;
+        public string Name { get; }
+        public string Description { get; }
         // TODO: ну чё нить ещё тут придумать.
         // в чём вообще сущность таска? Типа, зачем таск меняет игрока,
         // если игрок сам при выполнении может себя изменить. 
@@ -12,8 +13,14 @@
         // значит в таске должна быть инфа о стоимости его выполнения и награды.
         public StatParameters Prices;
 
-        public GameTask(StatParameters prices)
+        public GameTask(bool isNecessary, 
+            string name, 
+            string description, 
+            StatParameters prices)
         {
+            IsNecessary = isNecessary;
+            Name = name;
+            Description = description;
             Prices = prices;
         }
     }
