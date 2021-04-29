@@ -50,10 +50,11 @@
     <Compile Include="Domain\GameManipulator.cs" />
     <Compile Include="Domain\GameObject.cs" />
     <Compile Include="Domain\GlobalMap.cs" />
+    <Compile Include="Domain\ISkillParameters.cs" />
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\Player.cs" />
-    <Compile Include="Domain\Task.cs" />
-    <Compile Include="Domain\TaskResult.cs" />
+    <Compile Include="Domain\StatParameters.cs" />
+    <Compile Include="Domain\GameTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
