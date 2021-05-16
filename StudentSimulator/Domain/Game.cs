@@ -30,7 +30,7 @@ namespace StudentSimulator.Domain
             Map.CurrentLocation = location;
         }
 
-        public override bool Equals(object obj) => ReferenceEquals(this, obj) &&
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) ||
                                                    obj is Game game && game.ID == ID;
 
         public override int GetHashCode() => ID;
