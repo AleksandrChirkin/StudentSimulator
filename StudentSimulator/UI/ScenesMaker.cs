@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +18,12 @@ namespace StudentSimulator.UI
     {
 
         private Dictionary<int, Scene> scenes;
+        private ContentManager content;
 
-        public ScenesMaker()
+        public ScenesMaker(ContentManager content)
         {
-            scenes = new Dictionary<int,Scene>();
+            scenes = new Dictionary<int, Scene>();
+            this.content = content;
         }
         public Dictionary<int, Scene> GetScenes()
         {
@@ -32,7 +35,14 @@ namespace StudentSimulator.UI
 
         private void AddMainMenu()
         {
-
+            var objects = new List<IObjectUI>();
+            // рандомная штука для заглушки
+            var obj = new GameObjectUI<int>(0);
+            obj.LoadTexture(content, "textures/back_matmeh");
+            objects.Add(obj);
+            // пока рандомный плеер для заглушки
+            var mainMenu = new Scene(objects, new Domain.Player());
+            scenes.Add((int)Scenes.MainMenu, mainMenu);
         }
 
         private void AddUniver()

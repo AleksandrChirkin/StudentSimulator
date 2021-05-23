@@ -23,7 +23,7 @@ namespace StudentSimulator.UI
 		{
 			graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
-			scenesMaker = new ScenesMaker();
+			scenesMaker = new ScenesMaker(Content);
 			SetFullScreen();
 		}
 
@@ -48,7 +48,7 @@ namespace StudentSimulator.UI
 			scenes = scenesMaker.GetScenes();
 			Console.WriteLine(Window.ClientBounds.Width);
 			Console.WriteLine(Window.ClientBounds.Height);
-			//ChangeCurrentScene(Scenes.MainMenu);
+			ChangeCurrentScene(Scenes.MainMenu);
 			base.Initialize();
 		}
 
@@ -83,6 +83,12 @@ namespace StudentSimulator.UI
 		{
 			// здесь происходит исключительно отрисовка. Никаких вычислений!!!
 			GraphicsDevice.Clear(Color.CornflowerBlue);
+			spriteBatch.Begin();
+			foreach (var obj in currentSceneObjects)
+			{
+				spriteBatch.Draw(obj.Texture, obj.Coordinates, Color.White);
+			}
+			spriteBatch.End();
 			base.Draw(gameTime);
 		}
 	}
