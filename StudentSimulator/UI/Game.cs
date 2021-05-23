@@ -59,7 +59,6 @@ namespace StudentSimulator.UI
         {
             // здесь происходит исключительно отрисовка. Никаких вычислений!!!
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             base.Draw(gameTime);
         }
     }
