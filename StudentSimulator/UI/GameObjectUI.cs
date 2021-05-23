@@ -18,9 +18,12 @@ namespace StudentSimulator.UI
         public Texture2D Texture { get; private set; }
         public ObjectType LogicalGameObject { get; private set; }
 
-        public GameObjectUI(ObjectType gameObject)
+        public bool IsInteractable { get; private set; }
+
+        public GameObjectUI(ObjectType gameObject, bool isINnteractable)
         {
             LogicalGameObject = gameObject;
+            IsInteractable = isINnteractable;
             // в начало координат - левый верхний угол
             Coordinates = Vector2.Zero;
         }

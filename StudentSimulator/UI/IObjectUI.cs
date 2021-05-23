@@ -14,7 +14,8 @@ namespace StudentSimulator.UI
     {
         Vector2 Coordinates { get; set; }
         Texture2D Texture { get; }
-        void LoadTexture(ContentManager content, string pathToTexture);
+        bool IsInteractable { get; }
 
+        void LoadTexture(ContentManager content, string pathToTexture);
     }
 }

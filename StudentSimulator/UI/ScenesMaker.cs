@@ -37,9 +37,9 @@ namespace StudentSimulator.UI
         {
             var objects = new List<IObjectUI>();
             // рандомная штука для заглушки
-            var obj = new GameObjectUI<int>(0);
-            obj.LoadTexture(content, "textures/back_matmeh");
-            objects.Add(obj);
+            var background = new GameObjectUI<int>(0, false);
+            background.LoadTexture(content, "textures/back_matmeh");
+            objects.Add(background);
             // пока рандомный плеер для заглушки
             var mainMenu = new Scene(objects, new Domain.Player());
             scenes.Add((int)Scenes.MainMenu, mainMenu);
