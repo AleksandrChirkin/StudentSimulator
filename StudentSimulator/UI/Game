@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+namespace StudentSimulator.UI
+{
+    public class GameDrawer : Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        public GameDrawer()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+        }
+
+        // Выполняет начальную инициализацию игры
+        protected override void Initialize()
+        {
+            // здесь нужно создавать непосредсвенно логическую часть игры, выполнять загрузку данных и т.д
+            // крч проводить все подготовочные мероприятия
+            base.Initialize();
+        }
+
+        // Загружает ресурсы игры
+        protected override void LoadContent()
+        {
+            //тут уже моя(Димасова) работа - инициализировать спрайтики всякие разные интересные
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        }
+
+        // Вызывается при завершении игры для выгрузки использованных ресурсов
+        protected override void UnloadContent()
+        {
+
+        }
+
+        // Обновляет состояние игры, управляет ее логикой
+        protected override void Update(GameTime gameTime)
+        {
+            // здесь будет проходит все обновление логики - вычисляться текущее состоянии игры
+            // координаты обьектов, текущая сцена и т.д
+            // взаимодействие с юзверем
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Exit();
+
+            base.Update(gameTime);
+        }
+
+        // Выполняет отрисовку на экране
+        protected override void Draw(GameTime gameTime)
+        {
+            // здесь происходит исключительно отрисовка. Никаких вычислений!!!
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            base.Draw(gameTime);
+        }
+    }
+}
