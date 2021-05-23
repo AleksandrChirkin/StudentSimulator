@@ -17,12 +17,14 @@ namespace StudentSimulator.UI
 		private ScenesMaker scenesMaker;
 		private Scene currentScene;
 		private List<IObjectUI> currentSceneObjects;
+		private Vector2 screenSize;
 
 		public GameMain()
 		{
 			graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
 			scenesMaker = new ScenesMaker();
+			SetFullScreen();
 		}
 
 		private void ChangeCurrentScene(Scenes sceneName)
@@ -32,13 +34,21 @@ namespace StudentSimulator.UI
 			currentSceneObjects = currentScene.UIObjects;
 		}
 
+		private void SetFullScreen()
+		{
+			graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+			graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+		}
+
 		// Выполняет начальную инициализацию игры
 		protected override void Initialize()
 		{
 			// здесь нужно создавать непосредсвенно логическую часть игры, выполнять загрузку данных и т.д
 			// крч проводить все подготовочные мероприятия
 			scenes = scenesMaker.GetScenes();
-			ChangeCurrentScene(Scenes.MainMenu);
+			Console.WriteLine(Window.ClientBounds.Width);
+			Console.WriteLine(Window.ClientBounds.Height);
+			//ChangeCurrentScene(Scenes.MainMenu);
 			base.Initialize();
 		}
 
