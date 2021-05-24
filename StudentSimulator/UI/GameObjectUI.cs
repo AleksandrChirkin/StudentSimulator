@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,18 +10,21 @@ namespace StudentSimulator.UI
 {
     //графическая обертка над классами из логики
     //gameObject, player, InterfaceObject и т.д...
-    class GameObjectUI<ObjectType> : IObjectUI
+    class GameObjectUI : IObjectUI
+    //Убрал generic, так как мы можем создать оболочку только для GameObject и Player
+    //Случай с интерфейсовыми объектами оставил pltcm, только в качестве аргумента передаается null
+    //(наверное можно для интерфейсовых объектов выделить свой UI)
+    //впрочем, это Димасова работа)))
     {
         public Vector2 Coordinates { get; set; }
         public Texture2D Texture { get; private set; }
-        public ObjectType LogicalGameObject { get; private set; }
+        public GameObject LogicalGameObject { get; }
 
-        public bool IsInteractable { get; private set; }
-
-        public GameObjectUI(ObjectType gameObject, bool isINnteractable)
+        // Убрал поле IsInteractable, так как возможность взаимодействовать с объектом
+        // будет определяться в методе Scene.UserInteractedWith
+        public GameObjectUI(GameObject gameObject)
         {
             LogicalGameObject = gameObject;
-            IsInteractable = isINnteractable;
             // в начало координат - левый верхний угол
             Coordinates = Vector2.Zero;
         }
@@ -32,8 +33,5 @@ namespace StudentSimulator.UI
         {
             Texture = content.Load<Texture2D>(pathToTexture);
         }
-
-
-
     }
 }

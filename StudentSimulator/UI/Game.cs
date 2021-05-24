@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using StudentSimulator.Domain;
 
 namespace StudentSimulator.UI
 {
-	public class GameMain : Game
+	public class GameMain : Microsoft.Xna.Framework.Game
 	{
 		private GraphicsDeviceManager graphics;
 		private SpriteBatch spriteBatch;
-		private Dictionary<int, Scene> scenes;
+		private Dictionary<Scenes, Scene> scenes;
 		private ScenesMaker scenesMaker;
 		private Scene currentScene;
 		private List<IObjectUI> currentSceneObjects;
@@ -29,7 +28,7 @@ namespace StudentSimulator.UI
 
 		private void ChangeCurrentScene(Scenes sceneName)
 		{
-			currentScene = scenes[(int)sceneName];
+			currentScene = scenes[sceneName];
 			//чтобы каждый раз их не добывать во время работы программы
 			currentSceneObjects = currentScene.UIObjects;
 		}
@@ -57,13 +56,12 @@ namespace StudentSimulator.UI
 		{
 			//тут уже моя(Димасова) работа - инициализировать спрайтики всякие разные интересные
 			spriteBatch = new SpriteBatch(GraphicsDevice);
-
 		}
 
 		// Вызывается при завершении игры для выгрузки использованных ресурсов
 		protected override void UnloadContent()
 		{
-
+			GameManipulator.SaveGame();
 		}
 
 		// Обновляет состояние игры, управляет ее логикой
@@ -74,7 +72,6 @@ namespace StudentSimulator.UI
 			// взаимодействие с юзверем
 			if (Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
-
 			base.Update(gameTime);
 		}
 

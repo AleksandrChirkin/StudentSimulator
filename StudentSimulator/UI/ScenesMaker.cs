@@ -2,8 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using StudentSimulator.Domain;
 
 namespace StudentSimulator.UI
 {
@@ -16,16 +15,15 @@ namespace StudentSimulator.UI
     }
     class ScenesMaker
     {
-
-        private Dictionary<int, Scene> scenes;
+        private Dictionary<Scenes, Scene> scenes;
         private ContentManager content;
 
         public ScenesMaker(ContentManager content)
         {
-            scenes = new Dictionary<int, Scene>();
+            scenes = new Dictionary<Scenes, Scene>();
             this.content = content;
         }
-        public Dictionary<int, Scene> GetScenes()
+        public Dictionary<Scenes, Scene> GetScenes()
         {
             AddMainMenu();
             AddHome();
@@ -37,22 +35,53 @@ namespace StudentSimulator.UI
         {
             var objects = new List<IObjectUI>();
             // рандомная штука для заглушки
-            var background = new GameObjectUI<int>(0, false);
+            var background = new GameObjectUI(null);
             background.LoadTexture(content, "textures/back_matmeh");
             objects.Add(background);
             // пока рандомный плеер для заглушки
-            var mainMenu = new Scene(objects, new Domain.Player());
-            scenes.Add((int)Scenes.MainMenu, mainMenu);
+            var mainMenu = new Scene(objects, new Player());
+            scenes.Add(Scenes.MainMenu, mainMenu);
         }
 
         private void AddUniver()
         {
-
+            // берем текущую игру, загружаем из локации "univer" все лог. объекты,
+            // создаем для них граф. представление и закрепляем текстуру с соотв. именем
+            var objects = new List<IObjectUI>();
+            var currentGame = GameManipulator.currentGame;
+            var currentPlayer = currentGame.Player;
+            var playerUi = new PlayerUI(currentPlayer);
+            //playerUi.LoadTexture(content, ...); - загружаем текстуру для плеера
+            objects.Add(playerUi);
+            foreach (var gameObj in currentGame.Map.Locations
+                .First(location => location.Name == "Univer").Entities)
+            {
+                var background = new GameObjectUI(gameObj);
+                background.LoadTexture(content, $"textures/{gameObj.Name}");
+                objects.Add(background);
+            }
+            var univer = new Scene(objects, currentPlayer);
+            scenes.Add(Scenes.Univer, univer);
         }
 
         private void AddHome()
         {
-
+            // то же самое, но с локацией "home"
+            var objects = new List<IObjectUI>();
+            var currentGame = GameManipulator.currentGame;
+            var currentPlayer = currentGame.Player;
+            var playerUi = new PlayerUI(currentPlayer);
+            //playerUi.LoadTexture(content, ...);
+            objects.Add(playerUi);
+            foreach (var gameObj in currentGame.Map.Locations
+                .First(location => location.Name == "Home").Entities)
+            {
+                var background = new GameObjectUI(gameObj);
+                background.LoadTexture(content, $"textures/{gameObj.Name}");
+                objects.Add(background);
+            }
+            var home = new Scene(objects, currentPlayer);
+            scenes.Add(Scenes.Home, home);
         }
     }
 }

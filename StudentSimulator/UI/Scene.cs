@@ -2,15 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudentSimulator.UI
 {
     class Scene
     {
-        public List<IObjectUI> UIObjects { get; private set; }
-        public Player player { get; private set; }
+        public List<IObjectUI> UIObjects { get; }
+        public Player player { get; }
 
         public Scene(List<IObjectUI> UIObjects, Player player)
         {
@@ -22,7 +20,18 @@ namespace StudentSimulator.UI
         {
             // проверяем, если это Player, то одно
             // если это gameObject то интерракт от пользователя
-            // если это элемент интерфейса, то третье 
+            // если это элемент интерфейса, то третье
+            switch (objectUI)
+            {
+                case PlayerUI playerUi:
+                    break;
+                case GameObjectUI gameObjectUi:
+                    if (gameObjectUi.LogicalGameObject != null)
+                        player.InteractWith(gameObjectUi.LogicalGameObject);
+                    else
+                        ;
+                    break;
+            }
         }
     }
 }
