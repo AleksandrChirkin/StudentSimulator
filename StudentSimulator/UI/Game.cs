@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,7 +14,7 @@ namespace StudentSimulator.UI
 		private Dictionary<Scenes, Scene> scenes;
 		private ScenesMaker scenesMaker;
 		private Scene currentScene;
-		private List<IObjectUI> currentSceneObjects;
+		private List<IObjectUi> currentSceneObjects;
 		private Vector2 screenSize;
 
 		public GameMain()
@@ -30,7 +29,7 @@ namespace StudentSimulator.UI
 		{
 			currentScene = scenes[sceneName];
 			//чтобы каждый раз их не добывать во время работы программы
-			currentSceneObjects = currentScene.UIObjects;
+			currentSceneObjects = currentScene.UiObjects;
 		}
 
 		private void SetFullScreen()

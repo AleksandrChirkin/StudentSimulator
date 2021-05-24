@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Content;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using StudentSimulator.Domain;
@@ -33,9 +32,9 @@ namespace StudentSimulator.UI
 
         private void AddMainMenu()
         {
-            var objects = new List<IObjectUI>();
+            var objects = new List<IObjectUi>();
             // рандомная штука для заглушки
-            var background = new GameObjectUI(null);
+            var background = new GameObjectUi<int>(0, false);
             background.LoadTexture(content, "textures/back_matmeh");
             objects.Add(background);
             // пока рандомный плеер для заглушки
@@ -47,16 +46,16 @@ namespace StudentSimulator.UI
         {
             // берем текущую игру, загружаем из локации "univer" все лог. объекты,
             // создаем для них граф. представление и закрепляем текстуру с соотв. именем
-            var objects = new List<IObjectUI>();
+            var objects = new List<IObjectUi>();
             var currentGame = GameManipulator.currentGame;
             var currentPlayer = currentGame.Player;
-            var playerUi = new PlayerUI(currentPlayer);
+            var playerUi = new GameObjectUi<Player>(currentPlayer, false);
             //playerUi.LoadTexture(content, ...); - загружаем текстуру для плеера
             objects.Add(playerUi);
             foreach (var gameObj in currentGame.Map.Locations
                 .First(location => location.Name == "Univer").Entities)
             {
-                var background = new GameObjectUI(gameObj);
+                var background = new GameObjectUi<GameObject>(gameObj, true);
                 background.LoadTexture(content, $"textures/{gameObj.Name}");
                 objects.Add(background);
             }
@@ -67,16 +66,16 @@ namespace StudentSimulator.UI
         private void AddHome()
         {
             // то же самое, но с локацией "home"
-            var objects = new List<IObjectUI>();
+            var objects = new List<IObjectUi>();
             var currentGame = GameManipulator.currentGame;
             var currentPlayer = currentGame.Player;
-            var playerUi = new PlayerUI(currentPlayer);
+            var playerUi = new GameObjectUi<Player>(currentPlayer, false);
             //playerUi.LoadTexture(content, ...);
             objects.Add(playerUi);
             foreach (var gameObj in currentGame.Map.Locations
                 .First(location => location.Name == "Home").Entities)
             {
-                var background = new GameObjectUI(gameObj);
+                var background = new GameObjectUi<GameObject>(gameObj, true);
                 background.LoadTexture(content, $"textures/{gameObj.Name}");
                 objects.Add(background);
             }

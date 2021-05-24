@@ -1,37 +1,24 @@
 ﻿using StudentSimulator.Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace StudentSimulator.UI
 {
     class Scene
     {
-        public List<IObjectUI> UIObjects { get; }
-        public Player player { get; }
+        public List<IObjectUi> UiObjects { get; private set; }
+        public Player Player { get; private set; }
 
-        public Scene(List<IObjectUI> UIObjects, Player player)
+        public Scene(List<IObjectUi> uiObjects, Player player)
         {
-            this.UIObjects = UIObjects;
-            this.player = player;
+            UiObjects = uiObjects;
+            Player = player;
         }
 
-        public void UserInteractedWith(IObjectUI objectUI)
+        public void UserInteractedWith(IObjectUi objectUi)
         {
             // проверяем, если это Player, то одно
             // если это gameObject то интерракт от пользователя
-            // если это элемент интерфейса, то третье
-            switch (objectUI)
-            {
-                case PlayerUI playerUi:
-                    break;
-                case GameObjectUI gameObjectUi:
-                    if (gameObjectUi.LogicalGameObject != null)
-                        player.InteractWith(gameObjectUi.LogicalGameObject);
-                    else
-                        ;
-                    break;
-            }
+            // если это элемент интерфейса, то третье 
         }
     }
 }

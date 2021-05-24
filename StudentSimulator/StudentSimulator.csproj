@@ -90,7 +90,6 @@
     <Compile Include="UI\Game.cs" />
     <Compile Include="UI\GameObjectUI.cs" />
     <Compile Include="UI\IObjectUI.cs" />
-    <Compile Include="UI\PlayerUI.cs" />
     <Compile Include="UI\Scene.cs" />
     <Compile Include="UI\ScenesMaker.cs" />
   </ItemGroup>
