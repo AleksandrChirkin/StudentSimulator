@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using Newtonsoft.Json;
 
 namespace StudentSimulator.Domain
@@ -12,10 +13,19 @@ namespace StudentSimulator.Domain
         
         public static void CreateGame()
         {
-            var game = new Game(0, new Player(), 
-                new GlobalMap(new HashSet<Location>()), 
-                new Random().Next());
-            currentGame = game;
+            var locations = new HashSet<Location>();
+            var objectsBase = new XmlDocument();
+            objectsBase.Load("objectsBase.xml");
+            foreach (XmlNode node in objectsBase.DocumentElement)
+            {
+                var locationName = node.Attributes[0].Value;
+                var locationBuilder = new LocationBuilder();
+                foreach (XmlNode element in node["objects"].ChildNodes)
+                    locationBuilder.AddGameObject(new GameObject(element["name"].InnerText));
+                locations.Add(locationBuilder.Build(locationName));
+            }
+            currentGame = new Game(0, new Player(), 
+                new GlobalMap(locations),new Random().Next());
         }
 
         public static void LoadGame(Game game)
@@ -30,9 +40,7 @@ namespace StudentSimulator.Domain
                 games.Add(currentGame);
             using (var writer = new JsonTextWriter
                 (new StreamWriter(new FileStream(savedGamesFile, FileMode.OpenOrCreate))))
-            {
                 JsonSerializer.Create().Serialize(writer, games);
-            }
             currentGame = null;
         }
 

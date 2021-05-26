@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace StudentSimulator.Domain
 {
@@ -18,6 +17,6 @@ namespace StudentSimulator.Domain
             return this;
         }
 
-        public Location Build() => new Location(gameObjects);
+        public Location Build(string name) => new Location(name, gameObjects);
     }
 }

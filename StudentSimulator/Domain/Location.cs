@@ -8,8 +8,9 @@ namespace StudentSimulator.Domain
         private List<GameObject> gameObjects;
         public IReadOnlyCollection<GameObject> Entities => gameObjects;
 
-        public Location(List<GameObject> gameObjs)
+        public Location(string name, List<GameObject> gameObjs)
         {
+            Name = name;
             gameObjects = gameObjs;
         }
     }

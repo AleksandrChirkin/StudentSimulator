@@ -43,6 +43,7 @@ namespace StudentSimulator.UI
 		{
 			// здесь нужно создавать непосредсвенно логическую часть игры, выполнять загрузку данных и т.д
 			// крч проводить все подготовочные мероприятия
+			GameManipulator.CreateGame();
 			scenes = scenesMaker.GetScenes();
 			Console.WriteLine(Window.ClientBounds.Width);
 			Console.WriteLine(Window.ClientBounds.Height);
