@@ -11,17 +11,20 @@
         // метод мейктаск должен быть у игрока получается.
         // а таск резалт зачем тогда. может он не нужен?
         // значит в таске должна быть инфа о стоимости его выполнения и награды.
-        public StatParameters Prices;
+        public PlayerNeeds Prices { get; }
+        public int Authority { get; }
 
-        public GameTask(bool isNecessary, 
-            string name, 
-            string description, 
-            StatParameters prices)
+        public GameTask(bool isNecessary,
+            string name,
+            string description,
+            PlayerNeeds prices,
+            int authority = 0) 
         {
             IsNecessary = isNecessary;
             Name = name;
             Description = description;
             Prices = prices;
+            Authority = authority;
         }
     }
 }

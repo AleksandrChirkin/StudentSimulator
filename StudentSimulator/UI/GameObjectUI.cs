@@ -26,8 +26,5 @@ namespace StudentSimulator.UI
         {
             Texture = content.Load<Texture2D>(pathToTexture);
         }
-
-
-
     }
 }

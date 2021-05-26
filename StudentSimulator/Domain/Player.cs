@@ -5,15 +5,26 @@ namespace StudentSimulator.Domain
     public class Player
     {
         public string Name { get; }
-        public StatParameters Stats { get; private set; }
-        public ISkillParameters AlgebraSkill { get; private set; }
-        public ISkillParameters ProgrammingSkill { get; private set; }
-        public ISkillParameters PhilosophySkill { get; private set; }
+        public PlayerNeeds Needs { get; private set; }
+        public ILearningSkill AlgebraSkill { get; private set; }
+        public ILearningSkill ProgrammingSkill { get; private set; }
+        public ILearningSkill PhilosophySkill { get; private set; }
         public int Authority { get; private set; }
 
-        private readonly List<GameTask> tasks = new List<GameTask>();
+        private readonly List<GameTask> tasks;
         // всё что выше, нужно лучше проработать и понять как игрок будет знать про свои скиллы.
 
+        public IReadOnlyCollection<GameTask> GetGameTasks => tasks;
+
+        public Player()
+        {
+            tasks = new List<GameTask>();
+            Needs = new PlayerNeeds(0, 100, 0);
+            AlgebraSkill = new AlgebraSkill();
+            ProgrammingSkill = new ProgrammingSkill();
+            PhilosophySkill = new PhilosophySkill();
+        }
+        
         public void InteractWith(GameObject gameObject)
         {
             tasks.Add(gameObject.GetNextTask());
@@ -21,7 +32,8 @@ namespace StudentSimulator.Domain
 
         public void MakeTask(GameTask task)
         {
-            Stats += task.Prices;
+            Needs += task.Prices;
+            Authority += task.Authority;
             // тут может какая-то миниигра запускаться при выполнении.
             // можно передавать сюда лямбду.
         }

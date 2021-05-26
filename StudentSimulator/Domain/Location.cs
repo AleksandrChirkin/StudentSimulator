@@ -5,10 +5,10 @@ namespace StudentSimulator.Domain
     public class Location
     {
         public string Name { get; }
-        private HashSet<GameObject> gameObjects;
+        private List<GameObject> gameObjects;
         public IReadOnlyCollection<GameObject> Entities => gameObjects;
 
-        public Location(HashSet<GameObject> gameObjs)
+        public Location(List<GameObject> gameObjs)
         {
             gameObjects = gameObjs;
         }
