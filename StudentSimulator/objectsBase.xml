@@ -8,12 +8,9 @@
     <objects>
       <object name="cabinet632"/>
       <object name="cabinet628"/>
-      <object name="dekanat"/>
       <object name="cabinet608"/>
-      <object name="Sizy"/>
-      <object name="Repnitsky"/>
-      <object name="Pyanzina"/>
-      <object name="Ananichev"/>
+      <object name="board"/>
+      <object name="wedding_machine"/>
     </objects>
   </location>
 </locations>
