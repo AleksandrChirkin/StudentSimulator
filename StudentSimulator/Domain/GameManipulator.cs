@@ -8,20 +8,21 @@ namespace StudentSimulator.Domain
 {
     public static class GameManipulator
     {
-        private static readonly string savedGamesFile = $"{Environment.CurrentDirectory}/games.json";
+        private static readonly string savedGamesFile = "./games.json";
         public static Game currentGame { get; private set; }
         
         public static void CreateGame()
         {
             var locations = new HashSet<Location>();
             var objectsBase = new XmlDocument();
-            objectsBase.Load("objectsBase.xml");
+            objectsBase.Load("../../objectsBase.xml");
             foreach (XmlNode node in objectsBase.DocumentElement)
             {
-                var locationName = node.Attributes[0].Value;
+                var locationName = node.Attributes.GetNamedItem("name").InnerText;
                 var locationBuilder = new LocationBuilder();
                 foreach (XmlNode element in node["objects"].ChildNodes)
-                    locationBuilder.AddGameObject(new GameObject(element["name"].InnerText));
+                    locationBuilder.AddGameObject(new GameObject
+                        (element.Attributes.GetNamedItem("name").InnerText));
                 locations.Add(locationBuilder.Build(locationName));
             }
             currentGame = new Game(0, new Player(), 

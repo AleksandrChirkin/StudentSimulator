@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<locations>
+  <location name="Home">
+    <objects>
+    </objects>
+  </location>
+  <location name="Univer">
+    <objects>
+      <object name="cabinet632"/>
+      <object name="cabinet628"/>
+      <object name="dekanat"/>
+      <object name="cabinet608"/>
+      <object name="Sizy"/>
+      <object name="Repnitsky"/>
+      <object name="Pyanzina"/>
+      <object name="Ananichev"/>
+    </objects>
+  </location>
+</locations>
