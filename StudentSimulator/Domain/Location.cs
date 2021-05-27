@@ -5,13 +5,12 @@ namespace StudentSimulator.Domain
     public class Location
     {
         public string Name { get; }
-        private List<GameObject> gameObjects;
-        public IReadOnlyCollection<GameObject> Entities => gameObjects;
+        public IReadOnlyCollection<GameObject> Entities { get; }
 
-        public Location(string name, List<GameObject> gameObjs)
+        public Location(string name, IReadOnlyCollection<GameObject> entities)
         {
             Name = name;
-            gameObjects = gameObjs;
+            Entities = entities;
         }
     }
 }

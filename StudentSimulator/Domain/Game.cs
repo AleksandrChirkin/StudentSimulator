@@ -5,25 +5,24 @@
         public int Days { get; private set; }
         public Player Player { get; }
         public GlobalMap Map { get; }
-        
-        public readonly int ID;
+        public int Id { get; }
 
         public Game(int days, Player player, GlobalMap map, int id)
         {
             Days = days;
             Player = player;
             Map = map;
-            ID = id;
+            Id = id;
         }
 
-        public void ChangeLocation(Location location)
+        public void ChangeLocation(string name)
         {
-            Map.CurrentLocation = location;
+            Map.CurrentLocationName = name;
         }
 
         public override bool Equals(object obj) => ReferenceEquals(this, obj) ||
-                                                   obj is Game game && game.ID == ID;
+                                                   obj is Game game && game.Id == Id;
 
-        public override int GetHashCode() => ID;
+        public override int GetHashCode() => Id;
     }
 }

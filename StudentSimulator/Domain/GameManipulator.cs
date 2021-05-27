@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using System.Xml;
-using Newtonsoft.Json;
 
 namespace StudentSimulator.Domain
 {
@@ -28,9 +28,10 @@ namespace StudentSimulator.Domain
                                 (element.Attributes?.GetNamedItem("name").InnerText));
                     locations.Add(locationBuilder.Build(locationName));
                 }
-
-            CurrentGame = new Game(0, new Player(), 
+            CurrentGame = new Game(0, new Player("Student"), 
                 new GlobalMap(locations),new Random().Next());
+            CurrentGame.ChangeLocation("Univer");
+            SaveGame();
         }
 
         public static void LoadGame(Game game)
@@ -43,22 +44,12 @@ namespace StudentSimulator.Domain
             var games = GetSetOfGames();
             if (!games.Contains(CurrentGame))
                 games.Add(CurrentGame);
-            using (var writer = new JsonTextWriter
-                (new StreamWriter(new FileStream(savedGamesFile, FileMode.OpenOrCreate))))
-                JsonSerializer.Create().Serialize(writer, games);
+            File.WriteAllText(savedGamesFile, JsonSerializer.Serialize(games));
             CurrentGame = null;
         }
 
-        public static HashSet<Game> GetSetOfGames()
-        {
-            if (!File.Exists(savedGamesFile))
-                return new HashSet<Game>();
-            using (var reader = new JsonTextReader(new StreamReader(savedGamesFile)))
-            {
-                var jsonString = reader.ReadAsString();
-                return JsonConvert.DeserializeObject<HashSet<Game>>
-                    (jsonString ?? throw new InvalidOperationException());
-            }
-        }
+        public static HashSet<Game> GetSetOfGames() => File.Exists(savedGamesFile) 
+            ? JsonSerializer.Deserialize<HashSet<Game>>(File.ReadAllText(savedGamesFile)) 
+            : new HashSet<Game>();
     }
 }

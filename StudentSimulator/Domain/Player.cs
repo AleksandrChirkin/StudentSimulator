@@ -14,10 +14,11 @@ namespace StudentSimulator.Domain
         private readonly List<GameTask> tasks;
         // всё что выше, нужно лучше проработать и понять как игрок будет знать про свои скиллы.
 
-        public IReadOnlyCollection<GameTask> GetGameTasks => tasks;
+        public IReadOnlyCollection<GameTask> GameTasks => tasks;
 
-        public Player()
+        public Player(string name)
         {
+            Name = name;
             tasks = new List<GameTask>();
             Needs = new PlayerNeeds(0, 100, 0);
             AlgebraSkill = new AlgebraSkill();
