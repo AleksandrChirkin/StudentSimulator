@@ -39,14 +39,20 @@ namespace StudentSimulator.UI
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         }
 
+        private int CalculateOffset()
+        {
+            var backgroundHeight = 720;
+            return ((int)screenSize.Y - backgroundHeight) / 2;
+        }
         // Выполняет начальную инициализацию игры
         protected override void Initialize()
         {
             // здесь нужно создавать непосредсвенно логическую часть игры, выполнять загрузку данных и т.д
             // крч проводить все подготовочные мероприятия
             GameManipulator.CreateGame();
-            scenes = scenesMaker.GetScenes();
             screenSize = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            Console.WriteLine(CalculateOffset());
+            scenes = scenesMaker.GetScenes(CalculateOffset());
             Console.WriteLine(screenSize.X);
             Console.WriteLine(screenSize.Y);
             ChangeCurrentScene(Scenes.MainMenu);
@@ -103,7 +109,7 @@ namespace StudentSimulator.UI
         protected override void Draw(GameTime gameTime)
         {
             // здесь происходит исключительно отрисовка. Никаких вычислений!!!
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.BurlyWood);
             spriteBatch.Begin();
             foreach (var obj in currentSceneObjects)
             {

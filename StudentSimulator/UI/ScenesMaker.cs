@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using StudentSimulator.Domain;
+using Microsoft.Xna.Framework;
 
 namespace StudentSimulator.UI
 {
@@ -15,14 +16,16 @@ namespace StudentSimulator.UI
     {
         private Dictionary<Scenes, Scene> scenes;
         private ContentManager content;
+        private int offsetY;
 
         public ScenesMaker(ContentManager content)
         {
             scenes = new Dictionary<Scenes, Scene>();
             this.content = content;
         }
-        public Dictionary<Scenes, Scene> GetScenes()
+        public Dictionary<Scenes, Scene> GetScenes(int offsetY)
         {
+            this.offsetY = offsetY;
             AddMainMenu();
             //AddHome();
             AddUniver();
@@ -54,6 +57,7 @@ namespace StudentSimulator.UI
             var background = new GameObjectUi<GameObject>(null, false);
             background.LoadTexture(content, "textures/Univer/back_matmeh");
             background.Name = "background";
+            background.Coordinates = new Vector2(0, offsetY);
             objects.Add("background", background);
             foreach (var gameObj in currentGame.Map.Univer.Entities)
             {
@@ -65,20 +69,20 @@ namespace StudentSimulator.UI
             }
             var univer = new Scene(objects, currentPlayer);
             //лучше заменить на добычу координат из xml как и путей до текстур
-            PlaceObjectsOnScreenUniver(univer);
+            PlaceObjectsOnScreenUniver(univer, offsetY);
             scenes.Add(Scenes.Univer, univer);
         }
 
-        private void PlaceObjectsOnScreenUniver(Scene scene)
+        private void PlaceObjectsOnScreenUniver(Scene scene, int offsetY)
         {
             //куча хардкода, который стоило бы автоматизировать через XML но это потом...
             //558 218 - 632
             var objects = scene.UiObjects;
-            objects["632cab"].Coordinates = new Microsoft.Xna.Framework.Vector2(558,218);
-            objects["608cab"].Coordinates = new Microsoft.Xna.Framework.Vector2(2291, 218);
-            objects["628cab"].Coordinates = new Microsoft.Xna.Framework.Vector2(3131, 218);
-            objects["desk"].Coordinates = new Microsoft.Xna.Framework.Vector2(2588, 284);
-            objects["foodAutomat"].Coordinates = new Microsoft.Xna.Framework.Vector2(913, 212);
+            objects["632cab"].Coordinates = new Vector2(558, 218 + offsetY);
+            objects["608cab"].Coordinates = new Vector2(2291, 218 + offsetY);
+            objects["628cab"].Coordinates = new Vector2(3131, 218 + offsetY);
+            objects["desk"].Coordinates = new Vector2(2588, 284 + offsetY);
+            objects["foodAutomat"].Coordinates = new Vector2(913, 212 + offsetY);
 
         }
 
