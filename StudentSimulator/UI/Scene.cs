@@ -5,10 +5,10 @@ namespace StudentSimulator.UI
 {
     class Scene
     {
-        public List<IObjectUi> UiObjects { get; private set; }
+        public Dictionary<string, IObjectUi> UiObjects { get; private set; }
         public Player Player { get; private set; }
 
-        public Scene(List<IObjectUi> uiObjects, Player player)
+        public Scene(Dictionary<string, IObjectUi> uiObjects, Player player)
         {
             UiObjects = uiObjects;
             Player = player;
