@@ -23,6 +23,7 @@ namespace StudentSimulator.UI
             Content.RootDirectory = "Content";
             scenesMaker = new ScenesMaker(Content);
             SetFullScreen();
+            IsMouseVisible = true;
         }
 
         private void ChangeCurrentScene(Scenes sceneName)
@@ -45,8 +46,9 @@ namespace StudentSimulator.UI
             // крч проводить все подготовочные мероприятия
             GameManipulator.CreateGame();
             scenes = scenesMaker.GetScenes();
-            Console.WriteLine(Window.ClientBounds.Width);
-            Console.WriteLine(Window.ClientBounds.Height);
+            screenSize = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            Console.WriteLine(screenSize.X);
+            Console.WriteLine(screenSize.Y);
             ChangeCurrentScene(Scenes.MainMenu);
             ChangeCurrentScene(Scenes.Univer);
             base.Initialize();
@@ -73,8 +75,29 @@ namespace StudentSimulator.UI
             // взаимодействие с юзверем
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            var mouseState = Mouse.GetState();
+
+            // эталон положения обьектов
+            var moveSpeed = 5;
+            var backCoordinates = currentSceneObjects["background"].Coordinates;
+            if (mouseState.X > (3.0 / 4) * screenSize.X && (Math.Abs(backCoordinates.X) != currentSceneObjects["background"].Texture.Width - screenSize.X))
+                MoveScreen(-moveSpeed);
+            if ((mouseState.X < (1.0 / 4) * screenSize.X && Math.Abs(backCoordinates.X) != 0))
+                MoveScreen(+moveSpeed);
             base.Update(gameTime);
         }
+
+        private void MoveScreen(int speed)
+        {
+            foreach (var graphObj in currentSceneObjects)
+            {
+                var newCoordinations = new Vector2(graphObj.Value.Coordinates.X + speed, graphObj.Value.Coordinates.Y);
+                var name = graphObj.Value.Name;
+                currentSceneObjects[name].Coordinates = newCoordinations;
+            }
+        }
+
+
 
         // Выполняет отрисовку на экране
         protected override void Draw(GameTime gameTime)

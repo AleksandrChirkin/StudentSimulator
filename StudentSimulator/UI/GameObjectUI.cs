@@ -13,6 +13,7 @@ namespace StudentSimulator.UI
         public TObj LogicalGameObject { get; }
 
         public bool IsInteractable { get; }
+        public string Name { get; set; }
 
         public GameObjectUi(TObj gameObject, bool isInteractable)
         {

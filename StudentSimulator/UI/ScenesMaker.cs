@@ -53,12 +53,14 @@ namespace StudentSimulator.UI
              objects.Add(playerUi);*/
             var background = new GameObjectUi<GameObject>(null, false);
             background.LoadTexture(content, "textures/Univer/back_matmeh");
+            background.Name = "background";
             objects.Add("background", background);
             foreach (var gameObj in currentGame.Map.Univer.Entities)
             {
                 var sprite = new GameObjectUi<GameObject>(gameObj, true);
                 System.Console.WriteLine($"textures/{gameObj.Name}");
                 sprite.LoadTexture(content, $"textures/Univer/{gameObj.Name}");
+                sprite.Name = gameObj.Name;
                 objects.Add(gameObj.Name, sprite);
             }
             var univer = new Scene(objects, currentPlayer);

@@ -10,6 +10,8 @@ namespace StudentSimulator.UI
         Texture2D Texture { get; }
         bool IsInteractable { get; }
 
+        string Name { get; set; }
+
         void LoadTexture(ContentManager content, string pathToTexture);
     }
 }
