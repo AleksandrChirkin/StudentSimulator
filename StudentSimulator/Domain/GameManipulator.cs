@@ -15,7 +15,7 @@ namespace StudentSimulator.Domain
         {
             var locations = new HashSet<Location>();
             var objectsBase = new XmlDocument();
-            objectsBase.Load("../../objectsBase.xml");
+            objectsBase.Load("../../../../objectsBase.xml");
             if (objectsBase.DocumentElement != null)
                 foreach (XmlNode node in objectsBase.DocumentElement)
                 {
@@ -31,7 +31,6 @@ namespace StudentSimulator.Domain
             CurrentGame = new Game(0, new Player("Student"), 
                 new GlobalMap(locations),new Random().Next());
             CurrentGame.ChangeLocation("Univer");
-            SaveGame();
         }
 
         public static void LoadGame(Game game)
