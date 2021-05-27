@@ -64,7 +64,22 @@ namespace StudentSimulator.UI
                 objects.Add(gameObj.Name, sprite);
             }
             var univer = new Scene(objects, currentPlayer);
+            //лучше заменить на добычу координат из xml как и путей до текстур
+            PlaceObjectsOnScreenUniver(univer);
             scenes.Add(Scenes.Univer, univer);
+        }
+
+        private void PlaceObjectsOnScreenUniver(Scene scene)
+        {
+            //куча хардкода, который стоило бы автоматизировать через XML но это потом...
+            //558 218 - 632
+            var objects = scene.UiObjects;
+            objects["632cab"].Coordinates = new Microsoft.Xna.Framework.Vector2(558,218);
+            objects["608cab"].Coordinates = new Microsoft.Xna.Framework.Vector2(2291, 218);
+            objects["628cab"].Coordinates = new Microsoft.Xna.Framework.Vector2(3131, 218);
+            objects["desk"].Coordinates = new Microsoft.Xna.Framework.Vector2(2588, 284);
+            objects["foodAutomat"].Coordinates = new Microsoft.Xna.Framework.Vector2(913, 212);
+
         }
 
         private void AddHome()
