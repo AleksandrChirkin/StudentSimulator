@@ -6,11 +6,11 @@
   </location>
   <location name="Univer">
     <objects>
-      <object name="cabinet632"/>
-      <object name="cabinet628"/>
-      <object name="cabinet608"/>
-      <object name="board"/>
-      <object name="wedding_machine"/>
+      <object name="632cab"/>
+      <object name="628cab"/>
+      <object name="608cab"/>
+      <object name="desk"/>
+      <object name="foodAutomat"/>
     </objects>
   </location>
 </locations>
