@@ -47,7 +47,7 @@ namespace StudentSimulator.UI
             // берем текущую игру, загружаем из локации "univer" все лог. объекты,
             // создаем для них граф. представление и закрепляем текстуру с соотв. именем
             var objects = new List<IObjectUi>();
-            var currentGame = GameManipulator.currentGame;
+            var currentGame = GameManipulator.CurrentGame;
             var currentPlayer = currentGame.Player;
             var playerUi = new GameObjectUi<Player>(currentPlayer, false);
             //playerUi.LoadTexture(content, ...); - загружаем текстуру для плеера
@@ -67,7 +67,7 @@ namespace StudentSimulator.UI
         {
             // то же самое, но с локацией "home"
             var objects = new List<IObjectUi>();
-            var currentGame = GameManipulator.currentGame;
+            var currentGame = GameManipulator.CurrentGame;
             var currentPlayer = currentGame.Player;
             var playerUi = new GameObjectUi<Player>(currentPlayer, false);
             //playerUi.LoadTexture(content, ...);
