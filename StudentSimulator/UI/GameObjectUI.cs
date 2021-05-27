@@ -16,13 +16,14 @@ namespace StudentSimulator.UI
 
         public bool IsInteractable { get; }
         public string Name { get; set; }
-
+        public bool IsStatic { get; private set; }
         public bool IsFlashed { get; set; }
 
-        public GameObjectUi(TObj gameObject, bool isInteractable)
+        public GameObjectUi(TObj gameObject, bool isInteractable, bool isStatic)
         {
             LogicalGameObject = gameObject;
             IsInteractable = isInteractable;
+            IsStatic = isStatic;
             // в начало координат - левый верхний угол
             Coordinates = Vector2.Zero;
         }

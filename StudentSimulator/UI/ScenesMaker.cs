@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using StudentSimulator.Domain;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace StudentSimulator.UI
 {
@@ -17,11 +18,13 @@ namespace StudentSimulator.UI
         private Dictionary<Scenes, Scene> scenes;
         private ContentManager content;
         private int offsetY;
+        private GameMain game;
 
-        public ScenesMaker(ContentManager content)
+        public ScenesMaker(ContentManager content, GameMain game)
         {
             scenes = new Dictionary<Scenes, Scene>();
             this.content = content;
+            this.game = game;
         }
         public Dictionary<Scenes, Scene> GetScenes(int offsetY)
         {
@@ -36,7 +39,7 @@ namespace StudentSimulator.UI
         {
             var objects = new Dictionary<string, IObjectUi>();
             // рандомная штука для заглушки
-            var background = new GameObjectUi<int>(0, false);
+            var background = new GameObjectUi<int>(0, false, false);
             background.LoadTexture(content, "textures/back_matmeh");
             objects.Add("background", background);
             // пока рандомный плеер для заглушки
@@ -51,27 +54,48 @@ namespace StudentSimulator.UI
             var objects = new Dictionary<string, IObjectUi>();
             var currentGame = GameManipulator.CurrentGame;
             var currentPlayer = currentGame.Player;
-            var playerUi = new GameObjectUi<Player>(currentPlayer, false);
+            var playerUi = new GameObjectUi<Player>(currentPlayer, false, false);
             /* playerUi.LoadTexture(content, ...)
              objects.Add(playerUi);*/
-            var background = new GameObjectUi<GameObject>(null, false);
+            var background = new GameObjectUi<GameObject>(null, false, false);
             background.LoadTexture(content, "textures/Univer/back_matmeh");
             background.Name = "background";
             background.Coordinates = new Vector2(0, offsetY);
             objects.Add("background", background);
             foreach (var gameObj in currentGame.Map.Univer.Entities)
             {
-                var sprite = new GameObjectUi<GameObject>(gameObj, true);
+                var sprite = new GameObjectUi<GameObject>(gameObj, true, false);
                 System.Console.WriteLine($"textures/{gameObj.Name}");
                 sprite.LoadTexture(content, $"textures/Univer/{gameObj.Name}");
                 sprite.LoadFlashedTexture(content, $"textures/Univer/{gameObj.Name}Enable");
                 sprite.Name = gameObj.Name;
                 objects.Add(gameObj.Name, sprite);
             }
-            var univer = new Scene(objects, currentPlayer);
+            //добавим интерфейс
+            var allObjects = objects.Union(GetUI()).ToDictionary(x => x.Key, x => x.Value);
+
+            var univer = new Scene(allObjects, currentPlayer);
             //лучше заменить на добычу координат из xml как и путей до текстур
             PlaceObjectsOnScreenUniver(univer, offsetY);
             scenes.Add(Scenes.Univer, univer);
+        }
+
+        private Dictionary<string, IObjectUi> GetUI()
+        {
+            var objects = new Dictionary<string, IObjectUi>();
+
+            var uiSample = new GameObjectUi<GameObject>(null, false, true);
+            uiSample.LoadTexture(content, "textures/Interface/leftUI");
+            uiSample.Name = "uiL";
+            uiSample.Coordinates = new Vector2(0, 0);
+            objects.Add("uiL", uiSample);
+
+            var uiSample2 = new GameObjectUi<GameObject>(null, false, true);
+            uiSample2.LoadTexture(content, "textures/Interface/rightUI");
+            uiSample2.Name = "uiR";
+            uiSample2.Coordinates = new Vector2(game.Window.ClientBounds.Width - 200, 0);
+            objects.Add("uiR", uiSample2);
+            return objects;
         }
 
         private void PlaceObjectsOnScreenUniver(Scene scene, int offsetY)
@@ -84,7 +108,6 @@ namespace StudentSimulator.UI
             objects["628cab"].Coordinates = new Vector2(3131, 218 + offsetY);
             objects["desk"].Coordinates = new Vector2(2588, 284 + offsetY);
             objects["foodAutomat"].Coordinates = new Vector2(913, 212 + offsetY);
-
         }
 
         private void AddHome()
@@ -93,12 +116,12 @@ namespace StudentSimulator.UI
             var objects = new Dictionary<string, IObjectUi>();
             var currentGame = GameManipulator.CurrentGame;
             var currentPlayer = currentGame.Player;
-            var playerUi = new GameObjectUi<Player>(currentPlayer, false);
+            var playerUi = new GameObjectUi<Player>(currentPlayer, false, false);
             //playerUi.LoadTexture(content, ...);
             //objects.Add(playerUi);
             foreach (var gameObj in currentGame.Map.Home.Entities)
             {
-                var background = new GameObjectUi<GameObject>(gameObj, true);
+                var background = new GameObjectUi<GameObject>(gameObj, true, false);
                 //background.LoadTexture(content, $"textures/{gameObj.Name}");
                 objects.Add(gameObj.Name, background);
             }

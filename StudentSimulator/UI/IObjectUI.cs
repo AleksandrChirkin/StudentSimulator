@@ -12,6 +12,7 @@ namespace StudentSimulator.UI
         Texture2D FlashedTexture { get; }
         bool IsInteractable { get; }
         bool IsFlashed { get; set; }
+        bool IsStatic { get; }
 
         string Name { get; set; }
 

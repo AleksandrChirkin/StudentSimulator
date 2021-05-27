@@ -21,7 +21,7 @@ namespace StudentSimulator.UI
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            scenesMaker = new ScenesMaker(Content);
+            scenesMaker = new ScenesMaker(Content, this);
             SetFullScreen();
             IsMouseVisible = true;
         }
@@ -115,9 +115,12 @@ namespace StudentSimulator.UI
         {
             foreach (var graphObj in currentSceneObjects)
             {
-                var newCoordinations = new Vector2(graphObj.Value.Coordinates.X + speed, graphObj.Value.Coordinates.Y);
-                var name = graphObj.Value.Name;
-                currentSceneObjects[name].Coordinates = newCoordinations;
+                if (!graphObj.Value.IsStatic)
+                {
+                    var newCoordinations = new Vector2(graphObj.Value.Coordinates.X + speed, graphObj.Value.Coordinates.Y);
+                    var name = graphObj.Value.Name;
+                    currentSceneObjects[name].Coordinates = newCoordinations;
+                }
             }
         }
 
