@@ -83,6 +83,24 @@ namespace StudentSimulator.UI
                 Exit();
             var mouseState = Mouse.GetState();
 
+            foreach (var gameObj in currentSceneObjects)
+            {
+                if (gameObj.Value.MouseOnObj(mouseState.X, mouseState.Y) && gameObj.Value.IsInteractable)
+                {
+                    gameObj.Value.IsFlashed = true;
+                    if (gameObj.Value.MouseClickedOn(mouseState.LeftButton.ToString()))
+                    {
+                        gameObj.Value.OnClick();
+                    }
+                }
+                else
+                {
+                    gameObj.Value.IsFlashed = false;
+                }
+            }
+
+
+
             // эталон положения обьектов
             var moveSpeed = 5;
             var backCoordinates = currentSceneObjects["background"].Coordinates;
@@ -113,7 +131,12 @@ namespace StudentSimulator.UI
             spriteBatch.Begin();
             foreach (var obj in currentSceneObjects)
             {
-                spriteBatch.Draw(obj.Value.Texture, obj.Value.Coordinates, Color.White);
+                if (!obj.Value.IsFlashed)
+                    spriteBatch.Draw(obj.Value.Texture, obj.Value.Coordinates, Color.White);
+                else
+                {
+                    spriteBatch.Draw(obj.Value.FlashedTexture, obj.Value.Coordinates, Color.White);
+                }
             }
             spriteBatch.End();
             base.Draw(gameTime);

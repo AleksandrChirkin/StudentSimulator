@@ -64,6 +64,7 @@ namespace StudentSimulator.UI
                 var sprite = new GameObjectUi<GameObject>(gameObj, true);
                 System.Console.WriteLine($"textures/{gameObj.Name}");
                 sprite.LoadTexture(content, $"textures/Univer/{gameObj.Name}");
+                sprite.LoadFlashedTexture(content, $"textures/Univer/{gameObj.Name}Enable");
                 sprite.Name = gameObj.Name;
                 objects.Add(gameObj.Name, sprite);
             }
