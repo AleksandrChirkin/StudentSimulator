@@ -15,7 +15,7 @@ namespace StudentSimulator.Domain
         {
             var locations = new HashSet<Location>();
             var objectsBase = new XmlDocument();
-            objectsBase.Load("../../../../objectsBase.xml");
+            objectsBase.Load("../../../objectsBase.xml");
             if (objectsBase.DocumentElement != null)
                 foreach (XmlNode node in objectsBase.DocumentElement)
                 {
