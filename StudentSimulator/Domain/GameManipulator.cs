@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text.Json;
 using System.Xml;
 
@@ -15,8 +16,8 @@ namespace StudentSimulator.Domain
         {
             var locations = new HashSet<Location>();
             var objectsBase = new XmlDocument();
-            var basePath = "../../../objectsBase.xml";
-            objectsBase.Load(forTest ? $"../{basePath}" : basePath);
+            var basePath = $"{Assembly.GetExecutingAssembly().Location}/../../../..";
+            objectsBase.Load(forTest ? $"{basePath}/../objectsBase.xml" : $"{basePath}/objectsBase.xml");
             if (objectsBase.DocumentElement != null)
                 foreach (XmlNode node in objectsBase.DocumentElement)
                 {
