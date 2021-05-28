@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using StudentSimulator.Domain;
+using System;
+using System.Collections.Generic;
 
 namespace StudentSimulator.UI
 {
@@ -15,15 +17,21 @@ namespace StudentSimulator.UI
         public TObj LogicalGameObject { get; }
 
         public bool IsInteractable { get; }
+        public bool IsMooving { get; set; }
         public string Name { get; set; }
         public bool IsStatic { get; private set; }
         public bool IsFlashed { get; set; }
+        private float mooveDestination = -1;
+        private int mooveSpeed = 5;
+
+        public List<Texture2D> Animation { get; private set; }
 
         public GameObjectUi(TObj gameObject, bool isInteractable, bool isStatic)
         {
             LogicalGameObject = gameObject;
             IsInteractable = isInteractable;
             IsStatic = isStatic;
+            IsMooving = false;
             // в начало координат - левый верхний угол
             Coordinates = Vector2.Zero;
         }
@@ -53,9 +61,28 @@ namespace StudentSimulator.UI
             return state.Equals("Pressed");
         }
 
-        public void OnClick()
+        public void OnClick(IObjectUi player)
         {
-            System.Console.WriteLine(Name);
+            var mooveVector = Coordinates.X.CompareTo(player.Coordinates.X);
+            player.SetMoveDestination(Coordinates.X, mooveVector * 5);
+            player.IsMooving = true;
+        }
+
+        public void SetMoveDestination(float destinationX, int speed)
+        {
+            mooveDestination = destinationX;
+            mooveSpeed = speed;
+        }
+        public void MoveTo()
+        {
+            if (Math.Abs(Coordinates.X - mooveDestination) > Math.Abs(mooveSpeed))
+            {
+                Coordinates = new Vector2(Coordinates.X + mooveSpeed, Coordinates.Y);
+            }
+            else
+            {
+                IsMooving = false;
+            }
         }
     }
 }

@@ -53,10 +53,6 @@ namespace StudentSimulator.UI
             // создаем для них граф. представление и закрепляем текстуру с соотв. именем
             var objects = new Dictionary<string, IObjectUi>();
             var currentGame = GameManipulator.CurrentGame;
-            var currentPlayer = currentGame.Player;
-            var playerUi = new GameObjectUi<Player>(currentPlayer, false, false);
-            /* playerUi.LoadTexture(content, ...)
-             objects.Add(playerUi);*/
             var background = new GameObjectUi<GameObject>(null, false, false);
             background.LoadTexture(content, "textures/Univer/back_matmeh");
             background.Name = "background";
@@ -73,6 +69,13 @@ namespace StudentSimulator.UI
             }
             //добавим интерфейс
             var allObjects = objects.Union(GetUI()).ToDictionary(x => x.Key, x => x.Value);
+
+            //добавим игрока
+            var currentPlayer = currentGame.Player;
+            var playerUi = new GameObjectUi<Player>(currentPlayer, false, false);
+            playerUi.LoadTexture(content, "textures/Actor/gg_move/Right/GG_right");
+            playerUi.Name = "player";
+            allObjects.Add("player", playerUi);
 
             var univer = new Scene(allObjects, currentPlayer);
             //лучше заменить на добычу координат из xml как и путей до текстур
@@ -108,6 +111,7 @@ namespace StudentSimulator.UI
             objects["628cab"].Coordinates = new Vector2(3131, 218 + offsetY);
             objects["desk"].Coordinates = new Vector2(2588, 284 + offsetY);
             objects["foodAutomat"].Coordinates = new Vector2(913, 212 + offsetY);
+            objects["player"].Coordinates = new Vector2(0, 295 + offsetY);
         }
 
         private void AddHome()
