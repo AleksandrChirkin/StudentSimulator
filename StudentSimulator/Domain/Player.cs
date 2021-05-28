@@ -20,6 +20,8 @@ namespace StudentSimulator.Domain
         {
             Name = name;
             tasks = new List<GameTask>();
+            tasks.Add(new GameTask(true, "First task", "Test task", 
+                new PlayerNeeds(0, 0, 0)));
             Needs = new PlayerNeeds(0, 100, 0);
             AlgebraSkill = new AlgebraSkill();
             ProgrammingSkill = new ProgrammingSkill();
