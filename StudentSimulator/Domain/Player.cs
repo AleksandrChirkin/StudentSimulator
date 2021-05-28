@@ -28,7 +28,9 @@ namespace StudentSimulator.Domain
         
         public void InteractWith(GameObject gameObject)
         {
-            tasks.Add(gameObject.GetNextTask());
+            var task = gameObject.GetNextTask();
+            if (task != null)
+                tasks.Add(task);
         }
 
         public void MakeTask(GameTask task)
