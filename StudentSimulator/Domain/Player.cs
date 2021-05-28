@@ -41,6 +41,7 @@ namespace StudentSimulator.Domain
             Authority += task.Authority;
             // тут может какая-то миниигра запускаться при выполнении.
             // можно передавать сюда лямбду.
+            tasks.Remove(task);
         }
     }
 }
