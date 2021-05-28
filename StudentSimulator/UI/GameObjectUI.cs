@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StudentSimulator.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StudentSimulator.UI
 {
@@ -66,6 +67,27 @@ namespace StudentSimulator.UI
             var mooveVector = Coordinates.X.CompareTo(player.Coordinates.X);
             player.SetMoveDestination(Coordinates.X, mooveVector * 5);
             player.IsMooving = true;
+
+            //берем таск
+            if (LogicalGameObject is GameObject lg)
+            {
+                var logicalPlayer = GameManipulator.CurrentGame.Player;
+                if (Name.Equals("desk"))
+                {
+                    //решаем таск
+                    var task = logicalPlayer.GameTasks.FirstOrDefault();
+                    if (task != null)
+                        logicalPlayer.MakeTask(logicalPlayer.GameTasks.GetEnumerator().Current);
+                    else
+                        Console.WriteLine("There is not tasks to do");
+                }
+                else
+                {
+                    logicalPlayer.InteractWith(lg);
+                }
+                Console.WriteLine(logicalPlayer.GameTasks);
+            }
+
         }
 
         public void SetMoveDestination(float destinationX, int speed)
