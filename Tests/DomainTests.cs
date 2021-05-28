@@ -1,4 +1,6 @@
 using System.IO;
+using System.Linq;
+using System.Threading;
 using NUnit.Framework;
 using StudentSimulator.Domain;
 
@@ -9,7 +11,7 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            GameManipulator.CreateGame();
+            GameManipulator.CreateGame(true);
         }
 
         [Test]
@@ -26,13 +28,17 @@ namespace Tests
             GameManipulator.SaveGame();
             Assert.IsNull(GameManipulator.CurrentGame);
             Assert.IsTrue(File.Exists("./games.json"));
+            var gamesSet = GameManipulator.GetSetOfGames();
+            Assert.AreEqual( 1, gamesSet.Count);
+            GameObjectsExistsContainsAllFields(gamesSet.First());
         }
 
         [Test]
         public void TestSaveMultipleGamesAndRestoreSetOfGame()
         {
             GameManipulator.SaveGame();
-            GameManipulator.CreateGame();
+            Thread.Sleep(100);
+            GameManipulator.CreateGame(true);
             GameManipulator.SaveGame();
             var gamesSet = GameManipulator.GetSetOfGames();
             Assert.AreEqual( 2, gamesSet.Count);

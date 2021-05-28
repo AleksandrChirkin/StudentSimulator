@@ -11,11 +11,12 @@ namespace StudentSimulator.Domain
         private static readonly string savedGamesFile = "./games.json";
         public static Game CurrentGame { get; private set; }
         
-        public static void CreateGame()
+        public static void CreateGame(bool forTest = false)
         {
             var locations = new HashSet<Location>();
             var objectsBase = new XmlDocument();
-            objectsBase.Load("../../../objectsBase.xml");
+            var basePath = "../../../objectsBase.xml";
+            objectsBase.Load(forTest ? $"../{basePath}" : basePath);
             if (objectsBase.DocumentElement != null)
                 foreach (XmlNode node in objectsBase.DocumentElement)
                 {
