@@ -85,12 +85,14 @@ namespace StudentSimulator.UI
 
             foreach (var gameObj in currentSceneObjects)
             {
+                if (gameObj.Value.IsMooving)
+                    gameObj.Value.MoveTo();
                 if (gameObj.Value.MouseOnObj(mouseState.X, mouseState.Y) && gameObj.Value.IsInteractable)
                 {
                     gameObj.Value.IsFlashed = true;
                     if (gameObj.Value.MouseClickedOn(mouseState.LeftButton.ToString()))
                     {
-                        gameObj.Value.OnClick();
+                        gameObj.Value.OnClick(currentSceneObjects["player"]);
                     }
                 }
                 else
@@ -98,7 +100,6 @@ namespace StudentSimulator.UI
                     gameObj.Value.IsFlashed = false;
                 }
             }
-
 
 
             // эталон положения обьектов
