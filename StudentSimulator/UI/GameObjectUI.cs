@@ -77,7 +77,10 @@ namespace StudentSimulator.UI
                     //решаем таск
                     var task = logicalPlayer.GameTasks.FirstOrDefault();
                     if (task != null)
-                        logicalPlayer.MakeTask(logicalPlayer.GameTasks.GetEnumerator().Current);
+                    {
+                        logicalPlayer.MakeTask(task);
+                        Console.WriteLine("Task was made!");
+                    }
                     else
                         Console.WriteLine("There is not tasks to do");
                 }
