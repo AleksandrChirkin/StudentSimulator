@@ -8,27 +8,26 @@ namespace Tests
 {
     public class DomainTests
     {
+        private Game _game;
         [SetUp]
         public void Setup()
         {
-            GameManipulator.CreateGame(true);
+            _game = Game.CreateGame(true);
         }
 
         [Test]
         public void TestCreateGame()
         {
-            var currentGame = GameManipulator.CurrentGame;
-            GameObjectsExistsContainsAllFields(currentGame);
-            Assert.AreEqual(0, currentGame.Days);
+            GameObjectsExistsContainsAllFields(_game);
+            Assert.AreEqual(0, _game.Days);
         }
 
         [Test]
         public void TestSaveGame()
         {
-            GameManipulator.SaveGame();
-            Assert.IsNull(GameManipulator.CurrentGame);
+            Game.SaveGame(_game);
             Assert.IsTrue(File.Exists("./games.json"));
-            var gamesSet = GameManipulator.GetSetOfGames();
+            var gamesSet = Game.GetSetOfGames();
             Assert.AreEqual( 1, gamesSet.Count);
             GameObjectsExistsContainsAllFields(gamesSet.First());
         }
@@ -36,11 +35,11 @@ namespace Tests
         [Test]
         public void TestSaveMultipleGamesAndRestoreSetOfGame()
         {
-            GameManipulator.SaveGame();
+            Game.SaveGame(_game);
             Thread.Sleep(100);
-            GameManipulator.CreateGame(true);
-            GameManipulator.SaveGame();
-            var gamesSet = GameManipulator.GetSetOfGames();
+            _game = Game.CreateGame(true);
+            Game.SaveGame(_game);
+            var gamesSet = Game.GetSetOfGames();
             Assert.AreEqual( 2, gamesSet.Count);
             foreach (var game in gamesSet)
                 GameObjectsExistsContainsAllFields(game);

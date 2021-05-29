@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using StudentSimulator.Domain;
 
 namespace StudentSimulator.UI
 {
-    public class GameMain : Microsoft.Xna.Framework.Game
+    public class GameUI : Game
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -16,8 +15,9 @@ namespace StudentSimulator.UI
         private Scene currentScene;
         private Dictionary<string, IObjectUi> currentSceneObjects;
         private Vector2 screenSize;
+        public static Domain.Game CurrentLogicalGame { get; private set; }
 
-        public GameMain()
+        public GameUI()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -49,7 +49,7 @@ namespace StudentSimulator.UI
         {
             // здесь нужно создавать непосредсвенно логическую часть игры, выполнять загрузку данных и т.д
             // крч проводить все подготовочные мероприятия
-            GameManipulator.CreateGame();
+            CurrentLogicalGame = Domain.Game.CreateGame();
             screenSize = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
             Console.WriteLine(CalculateOffset());
             scenes = scenesMaker.GetScenes(CalculateOffset());
@@ -70,7 +70,7 @@ namespace StudentSimulator.UI
         // Вызывается при завершении игры для выгрузки использованных ресурсов
         protected override void UnloadContent()
         {
-            GameManipulator.SaveGame();
+            Domain.Game.SaveGame(CurrentLogicalGame);
         }
 
         // Обновляет состояние игры, управляет ее логикой
@@ -91,23 +91,19 @@ namespace StudentSimulator.UI
                 {
                     gameObj.Value.IsFlashed = true;
                     if (gameObj.Value.MouseClickedOn(mouseState.LeftButton.ToString()))
-                    {
                         gameObj.Value.OnClick(currentSceneObjects["player"]);
-                    }
                 }
                 else
-                {
                     gameObj.Value.IsFlashed = false;
-                }
             }
 
 
             // эталон положения обьектов
             var moveSpeed = 5;
             var backCoordinates = currentSceneObjects["background"].Coordinates;
-            if (mouseState.X > (3.0 / 4) * screenSize.X && (Math.Abs(backCoordinates.X) != currentSceneObjects["background"].Texture.Width - screenSize.X))
+            if (mouseState.X > (3.0 / 4) * screenSize.X && Math.Abs(backCoordinates.X) != currentSceneObjects["background"].Texture.Width - screenSize.X)
                 MoveScreen(-moveSpeed);
-            if ((mouseState.X < (1.0 / 4) * screenSize.X && Math.Abs(backCoordinates.X) != 0))
+            if (mouseState.X < (1.0 / 4) * screenSize.X && Math.Abs(backCoordinates.X) != 0)
                 MoveScreen(+moveSpeed);
             base.Update(gameTime);
         }

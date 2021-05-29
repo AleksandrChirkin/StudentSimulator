@@ -18,9 +18,9 @@ namespace StudentSimulator.UI
         private Dictionary<Scenes, Scene> scenes;
         private ContentManager content;
         private int offsetY;
-        private GameMain game;
+        private GameUI game;
 
-        public ScenesMaker(ContentManager content, GameMain game)
+        public ScenesMaker(ContentManager content, GameUI game)
         {
             scenes = new Dictionary<Scenes, Scene>();
             this.content = content;
@@ -52,13 +52,12 @@ namespace StudentSimulator.UI
             // берем текущую игру, загружаем из локации "univer" все лог. объекты,
             // создаем для них граф. представление и закрепляем текстуру с соотв. именем
             var objects = new Dictionary<string, IObjectUi>();
-            var currentGame = GameManipulator.CurrentGame;
             var background = new GameObjectUi<GameObject>(null, false, false);
             background.LoadTexture(content, "textures/Univer/back_matmeh");
             background.Name = "background";
             background.Coordinates = new Vector2(0, offsetY);
             objects.Add("background", background);
-            foreach (var gameObj in currentGame.Map.Univer.Entities)
+            foreach (var gameObj in GameUI.CurrentLogicalGame.Map.Univer.Entities)
             {
                 var sprite = new GameObjectUi<GameObject>(gameObj, true, false);
                 System.Console.WriteLine($"textures/{gameObj.Name}");
@@ -71,7 +70,7 @@ namespace StudentSimulator.UI
             var allObjects = objects.Union(GetUI()).ToDictionary(x => x.Key, x => x.Value);
 
             //добавим игрока
-            var currentPlayer = currentGame.Player;
+            var currentPlayer = GameUI.CurrentLogicalGame.Player;
             var playerUi = new GameObjectUi<Player>(currentPlayer, false, false);
             playerUi.LoadTexture(content, "textures/Actor/gg_move/Right/GG_right");
             playerUi.Name = "player";
@@ -118,12 +117,11 @@ namespace StudentSimulator.UI
         {
             // то же самое, но с локацией "home"
             var objects = new Dictionary<string, IObjectUi>();
-            var currentGame = GameManipulator.CurrentGame;
-            var currentPlayer = currentGame.Player;
+            var currentPlayer = GameUI.CurrentLogicalGame.Player;
             var playerUi = new GameObjectUi<Player>(currentPlayer, false, false);
             //playerUi.LoadTexture(content, ...);
             //objects.Add(playerUi);
-            foreach (var gameObj in currentGame.Map.Home.Entities)
+            foreach (var gameObj in GameUI.CurrentLogicalGame.Map.Home.Entities)
             {
                 var background = new GameObjectUi<GameObject>(gameObj, true, false);
                 //background.LoadTexture(content, $"textures/{gameObj.Name}");

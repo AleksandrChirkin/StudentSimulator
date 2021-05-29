@@ -113,7 +113,6 @@
   <ItemGroup>
     <Compile Include="Domain\Game.cs" />
     <Compile Include="Domain\LocationBuilder.cs" />
-    <Compile Include="Domain\GameManipulator.cs" />
     <Compile Include="Domain\GameObject.cs" />
     <Compile Include="Domain\GlobalMap.cs" />
     <Compile Include="Domain\Location.cs" />
@@ -126,7 +125,7 @@
     <Compile Include="Domain\Skills\ProgrammingSkill.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\Game.cs" />
+    <Compile Include="UI\GameUI.cs" />
     <Compile Include="UI\GameObjectUI.cs" />
     <Compile Include="UI\IObjectUI.cs" />
     <Compile Include="UI\Scene.cs" />

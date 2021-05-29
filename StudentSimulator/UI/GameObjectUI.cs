@@ -71,7 +71,7 @@ namespace StudentSimulator.UI
             //берем таск
             if (LogicalGameObject is GameObject lg)
             {
-                var logicalPlayer = GameManipulator.CurrentGame.Player;
+                var logicalPlayer = GameUI.CurrentLogicalGame.Player;
                 if (Name.Equals("desk"))
                 {
                     //решаем таск

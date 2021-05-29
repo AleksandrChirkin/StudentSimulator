@@ -6,7 +6,7 @@ namespace StudentSimulator
     {
         static void Main(string[] args)
         {
-            using (var game = new GameMain())
+            using (var game = new GameUI())
                 game.Run();
         }
     }
