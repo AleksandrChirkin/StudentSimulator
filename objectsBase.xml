@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<locations>
-  <location name="Home">
-    <objects>
-    </objects>
-  </location>
-  <location name="Univer">
-    <objects>
-      <object name="632cab"/>
-      <object name="628cab"/>
-      <object name="608cab"/>
-      <object name="desk"/>
-      <object name="foodAutomat"/>
-    </objects>
-  </location>
-</locations>
+<GlobalMap>
+  <Home>
+    <Name>Home</Name>
+    <Entities></Entities>
+  </Home>
+  <Univer>
+    <Name>Univer</Name>
+    <Entities>
+      <GameObject>
+        <ObjectName>632cab</ObjectName>
+        <Tasks></Tasks>
+      </GameObject>
+      <GameObject>
+        <ObjectName>628cab</ObjectName>
+        <Tasks></Tasks>
+      </GameObject>
+      <GameObject>
+        <ObjectName>608cab</ObjectName>
+        <Tasks></Tasks>
+      </GameObject>
+      <GameObject>
+        <ObjectName>desk</ObjectName>
+        <Tasks></Tasks>
+      </GameObject>
+      <GameObject>
+        <ObjectName>foodAutomat</ObjectName>
+        <Tasks></Tasks>
+      </GameObject>
+    </Entities>
+  </Univer>
+  <CurrentLocationName>Univer</CurrentLocationName>
+</GlobalMap>

@@ -112,7 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Game.cs" />
-    <Compile Include="Domain\LocationBuilder.cs" />
     <Compile Include="Domain\GameObject.cs" />
     <Compile Include="Domain\GlobalMap.cs" />
     <Compile Include="Domain\Location.cs" />

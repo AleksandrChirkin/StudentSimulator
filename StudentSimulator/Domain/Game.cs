@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Xml;
+using System.Xml.Serialization;
 
 namespace StudentSimulator.Domain
 {
@@ -27,26 +27,13 @@ namespace StudentSimulator.Domain
         
         public static Game CreateGame(bool forTest = false)
         {
-            var locations = new HashSet<Location>();
-            var objectsBase = new XmlDocument();
             var basePath = $"{Assembly.GetExecutingAssembly().Location}/../../../..";
-            objectsBase.Load(forTest ? $"{basePath}/../objectsBase.xml" : $"{basePath}/objectsBase.xml");
-            if (objectsBase.DocumentElement != null)
-                foreach (XmlNode node in objectsBase.DocumentElement)
-                {
-                    var locationName = node.Attributes?.GetNamedItem("name").InnerText;
-                    var locationBuilder = new LocationBuilder();
-                    var xmlNodeList = node["objects"]?.ChildNodes;
-                    if (xmlNodeList != null)
-                        foreach (XmlNode element in xmlNodeList)
-                            locationBuilder.AddGameObject(new GameObject
-                                (element.Attributes?.GetNamedItem("name").InnerText));
-                    locations.Add(locationBuilder.Build(locationName));
-                }
-            var game = new Game(0, new Player("Student"), 
-                new GlobalMap(locations),new Random().Next());
-            game.ChangeLocation("Univer");
-            return game;
+            var serializer = new XmlSerializer(typeof(GlobalMap));
+            using (var file = new FileStream(forTest
+                ? $"{basePath}/../objectsBase.xml"
+                : $"{basePath}/objectsBase.xml", FileMode.Open))
+                return new Game(0, new Player("Student"),
+                    (GlobalMap) serializer.Deserialize(file), new Random().Next());
         }
 
         /*public static void LoadGame(Game game)
@@ -66,7 +53,7 @@ namespace StudentSimulator.Domain
             ? JsonSerializer.Deserialize<HashSet<Game>>(File.ReadAllText(savedGamesFile)) 
             : new HashSet<Game>();
 
-        public void ChangeLocation(string name)
+        private void ChangeLocation(string name)
         {
             Map.CurrentLocationName = name;
         }

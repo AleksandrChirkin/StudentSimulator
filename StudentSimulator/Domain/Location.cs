@@ -1,16 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace StudentSimulator.Domain
 {
     public class Location
     {
-        public string Name { get; }
-        public IReadOnlyCollection<GameObject> Entities { get; }
+        [XmlElement]
+        public string Name { get; set; }
 
-        public Location(string name, IReadOnlyCollection<GameObject> entities)
+        [XmlElement(typeof(List<GameObject>))]
+        public List<GameObject> Entities { get; set; }
+
+        public Location(string name, List<GameObject> entities)
         {
             Name = name;
             Entities = entities;
         }
+        
+        public Location(){}
     }
 }

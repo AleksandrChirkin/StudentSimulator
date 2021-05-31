@@ -1,22 +1,21 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace StudentSimulator.Domain
 {
     public class GameObject
     {
-        public string Name { get; }
-        public IReadOnlyCollection<GameTask> Tasks { get; }
+        [XmlElement("ObjectName")]
+        public string Name { get; set; }
 
-        public GameObject(string name, params GameTask[] tasks)
-        {
-            Name = name;
-            Tasks = tasks.ToList();
-        }
+        [XmlElement(typeof(List<GameTask>))] 
+        public List<GameTask> Tasks { get; set; }
+
+        public GameObject() {}
 
         [JsonConstructor]
-        public GameObject(string name, IReadOnlyCollection<GameTask> tasks)
+        public GameObject(string name, List<GameTask> tasks)
         {
             Name = name;
             Tasks = tasks;

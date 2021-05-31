@@ -26,5 +26,7 @@
             Prices = prices;
             Authority = authority;
         }
+        
+        public GameTask() {}
     }
 }
